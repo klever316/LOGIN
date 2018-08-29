@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>INSPINIA | Responsive admin theme</title>
+        <!-- Include style per-controller - vendor plugins -->
+        <%= stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css") %>
+        
+        <!-- Main css styles -->
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+        
+        <!-- Main javascript files -->
+        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+        
+        <%= csrf_meta_tags %>
+        <%= favicon_link_tag 'logo_tj_favicon.png' %>
+    </head>
+    <body class="gray-bg">
+
+        <!-- Main view -->
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+                    <div class="loginColumns animated fadeInDown">
+                        <div class="col-md-12">
+                            <div class="logo" align="center">
+                                <div class="login100-pic js-tilt" data-tilt="data-tilt">
+                                    <h2 class="font-bold" style="color:#31797c;font-family: arial, Helvetica, sans-serif;">INSPINIA</h2>
+                                    <img alt="image" id="logo" src="<%= image_url 'logo_tj.png' %>" width="64px"/>
+                                    <li style="font-size: 15px">
+                                        Poder Judiciário<br/>
+                                        Comarca de Fortaleza<br/>
+                                        Diretoria do Fórum Clóvis Beviláqua<br/>
+                                        Gerência de Informática<br/>
+                                    </li>
+                                </div>
+                            </div>
+                            <div align="center">
+                                <div class="modal fade" id="myModal" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="padding: 5px">
+                                                <button type="button" class="close" data-dismiss="modal" onclick="$('.modal').removeClass('show').addClass('fade');" style="margin-right: 5px">&times;</button>
+                                                <h3 class="modal-title" style="font-weight: 700;color: #F2594B;text-align: center;">Atenção!</h3>
+                                            </div>
+                                            <div class="modal-body" style="font-size: 14px;padding: 10px 20px 0px 20px;">
+                                                <p style="font-weight: 600">Informamos que para uma melhor experiência de navegação, recomendamos o uso dos navegadores Google Chrome ou Mozilla Firefox.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                        <div class="row">
+                            <div class="ibox-content" style="">
+                                <form class="login100-form validate-form"> 
+                                    <div class="wrap-input100 validate-input">
+                                        <%= f.text_field :username, autofocus: true, class: "input100", placeholder:"Matrícula" %>
+                                        <span class="focus-input100"></span>
+                                        <span class="symbol-input100">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                        <%= f.password_field :password, class: "input100", placeholder: "Senha" %>
+                                        <span class="focus-input100"></span>
+                                        <span class="symbol-input100">
+                                            <i class="fa fa-lock" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <%= f.submit "Entrar", class: "login100-form-btn" %>
+                                </form>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>                                                   
+        <!-- Include javascript per-controller - vendor plugins -->
+        <%= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js") %>
+        <!-- Include javascript per-view -->
+        <!-- For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want -->
+        <%= yield :javascript %>
+
+        <% if "#{request.env['HTTP_USER_AGENT']}".include? "MSIE" %>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#myModal").modal('show');
+                });
+            </script>
+        <% end %>
+        
+        <% flash.each do |key, value| %>
+            <script type="text/javascript">
+                $.notify("<%= value %>");
+            </script>
+        <% end %>
+        
+        <script src="vendor/tilt/tilt.jquery.min.js"></script>
+        <script>
+            $('.js-tilt').tilt({scale: 1.1})
+        </script>
+    </body>
+</html>
